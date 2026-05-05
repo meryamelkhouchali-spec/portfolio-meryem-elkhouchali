@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meryem Elkhouchali | Portfolio</title>
+  <meta name="description" content="Portfolio professionnel de Meryem Elkhouchali, étudiante en Génie Informatique à EST Guelmim.">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-container">
+      <a href="#home" class="logo" aria-label="Accueil">M.E</a>
+      <button id="hamburger" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#projects">Projets</a></li>
+        <li><a href="#experience">Expérience</a></li>
+        <li><a href="#education">Formation</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+      <div class="hero-content reveal">
+       
+        <img src="image.png" alt="Meryem" class="avatar-img"> 
+        <h1>Meryem <span class="gradient-text">Elkhouchali</span></h1>
+        <p class="subtitle">Étudiante en Génie Informatique · EST Guelmim</p>
+        <p class="typing-line"><span id="typed-text"></span><span class="cursor">|</span></p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">Voir mes projets</a>
+          <a href="#contact" class="btn btn-outline">Me contacter</a>
+        </div>
+      </div>
+      <div class="scroll-arrow" aria-hidden="true">↓</div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Profil</span>
+          <h2>À Propos de Moi</h2>
+        </div>
+        <div class="about-card glass-card reveal">
+          <div class="about-photo">
+            <div class="avatar-placeholder small">ME</div>
+          </div>
+          <div class="about-text">
+            <p>Étudiante en 1ère année Génie Informatique à EST Guelmim. Passionnée par le développement web et la programmation, dotée d'un fort esprit analytique et d'une riche expérience en leadership associatif. Sérieuse et motivée, je cherche un stage pour développer mes compétences et acquérir une première expérience professionnelle.</p>
+            <div class="stats-grid">
+              <div class="stat">
+                <span class="stat-number" data-target="1">0</span>
+                <span class="stat-label">An d'études</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number" data-target="2">0</span>
+                <span class="stat-label">Projets académiques</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number" data-target="2">0</span>
+                <span class="stat-label">Rôles de leadership</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Expertise</span>
+          <h2>Mes Compétences</h2>
+          <p>Un mélange de compétences techniques et humaines</p>
+        </div>
+        <div class="skills-grid">
+          <article class="skill-card glass-card reveal">
+            <h3>💻 Développement Web</h3>
+            <div class="skill-item" data-percent="78">
+              <div class="skill-top"><span>HTML5 & CSS3</span><span>78%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="62">
+              <div class="skill-top"><span>JavaScript (ES6+)</span><span>62%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="70">
+              <div class="skill-top"><span>Responsive Design</span><span>70%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="50">
+              <div class="skill-top"><span>UI/UX Design (notions)</span><span>50%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass-card reveal">
+            <h3>⚙️ Programmation & Données</h3>
+            <div class="skill-item" data-percent="58">
+              <div class="skill-top"><span>Langage C</span><span>58%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="65">
+              <div class="skill-top"><span>Algorithmes & Logique</span><span>65%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="42">
+              <div class="skill-top"><span>Bases de données (SQL notions)</span><span>42%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="35">
+              <div class="skill-top"><span>Git & Versioning (notions)</span><span>35%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass-card reveal">
+            <h3>🛠️ Outils & Bureautique</h3>
+            <div class="skill-item" data-percent="85">
+              <div class="skill-top"><span>Microsoft Word</span><span>85%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="80">
+              <div class="skill-top"><span>Microsoft Excel</span><span>80%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="75">
+              <div class="skill-top"><span>Pages (Mac)</span><span>75%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="78">
+              <div class="skill-top"><span>PowerPoint / Présentations</span><span>78%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+          </article>
+
+          <article class="skill-card glass-card reveal">
+            <h3>🌟 Compétences Transversales</h3>
+            <div class="skill-item" data-percent="92">
+              <div class="skill-top"><span>Leadership & Management</span><span>92%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="88">
+              <div class="skill-top"><span>Communication & Expression</span><span>88%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="85">
+              <div class="skill-top"><span>Gestion de projet & Organisation</span><span>85%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="87">
+              <div class="skill-top"><span>Esprit d'analyse & Problem solving</span><span>87%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="90">
+              <div class="skill-top"><span>Travail en équipe</span><span>90%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="88">
+              <div class="skill-top"><span>Adaptabilité & Apprentissage rapide</span><span>88%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="82">
+              <div class="skill-top"><span>Médiation & Négociation</span><span>82%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+            <div class="skill-item" data-percent="80">
+              <div class="skill-top"><span>Prise de décision sous pression</span><span>80%</span></div>
+              <div class="skill-bar"><span></span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Réalisations</span>
+          <h2>Mes Projets</h2>
+        </div>
+        <div class="project-grid">
+          <article class="project-card glass-card reveal">
+            <span class="project-icon">🌐</span>
+            <h3>Portfolio Dynamique</h3>
+            <p>Conception et développement d'un site web personnel dynamique présentant compétences, parcours et projets.</p>
+            <div class="tags">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+            </div>
+            <a href="#contact" class="project-link">Voir plus</a>
+          </article>
+          <article class="project-card glass-card reveal">
+            <span class="project-icon">🗄️</span>
+            <h3>Application avec Base de Données</h3>
+            <p>Mini-projet académique avec gestion, manipulation et organisation de données.</p>
+            <div class="tags">
+              <span>Base de données</span>
+              <span>Logique</span>
+            </div>
+            <a href="#contact" class="project-link">Voir plus</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Leadership</span>
+          <h2>Expérience Associative</h2>
+        </div>
+        <div class="timeline reveal">
+          <article class="timeline-item">
+            <div class="timeline-content glass-card">
+              <h3>Président — BDE, EST Guelmim</h3>
+              <ul>
+                <li>Représentant officiel des étudiants</li>
+                <li>Coordination de la vie estudiantine</li>
+                <li>Organisation d'événements</li>
+                <li>Médiation étudiants-administration</li>
+              </ul>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-content glass-card">
+              <h3>Secrétaire Général — ADE, EST Guelmim</h3>
+              <ul>
+                <li>Supervision des clubs et budgets étudiants</li>
+                <li>Coordination des activités et projets</li>
+                <li>Prospection de sponsors et partenariats</li>
+                <li>Représentation officielle</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Formation</span>
+          <h2>Parcours Académique</h2>
+        </div>
+        <div class="education-grid">
+          <article class="education-card glass-card reveal">
+            <span>2025–Présent</span>
+            <h3>Génie Informatique (1ère année)</h3>
+            <p>EST Guelmim</p>
+          </article>
+          <article class="education-card glass-card reveal">
+            <span>2025</span>
+            <h3>Baccalauréat Sciences Physiques</h3>
+            <p>Lycée Qualifiant Bab Essahra, Guelmim</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-kicker">Contact</span>
+          <h2>Me Contacter</h2>
+        </div>
+        <div class="contact-grid">
+          <address class="contact-info glass-card reveal">
+            <p><strong>Email</strong><a href="mailto:meryamelkhouchali@gmail.com">meryamelkhouchali@gmail.com</a></p>
+            <p><strong>Téléphone</strong><a href="tel:+212602392513">+212 602392513</a></p>
+            <p><strong>Localisation</strong>Guelmim, Maroc</p>
+          </address>
+          <form class="contact-form glass-card reveal">
+            <label for="name">Nom</label>
+            <input id="name" name="name" type="text" placeholder="Votre nom">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="votre@email.com">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Votre message"></textarea>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>Meryem Elkhouchali © 2025</p>
+      <div class="footer-links">
+        <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="mailto:meryamelkhouchali@gmail.com">Gmail</a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="scroll-top" type="button" aria-label="Retour en haut">↑</button>
+</body>
+</html>
