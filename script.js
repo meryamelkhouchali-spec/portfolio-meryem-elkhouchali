@@ -1,14 +1,39 @@
 const navbar = document.getElementById("navbar");
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
-const scrollTopButton = document.getElementById("scroll-top");
+const scrollTopButton = document.getElementById("scrollTop");
 const typedText = document.getElementById("typed-text");
+const customCursor = document.getElementById("cursor");
+const githubUsername = document.getElementById("github-username");
+const fetchGithubButton = document.getElementById("fetch-github-btn");
+const githubLoading = document.getElementById("github-loading");
+const githubError = document.getElementById("github-error");
+const githubProfile = document.getElementById("github-profile");
+const githubRepos = document.getElementById("github-repos");
+const quoteLoading = document.getElementById("quote-loading");
+const quoteText = document.getElementById("quote-text");
+const quoteAuthor = document.getElementById("quote-author");
+const newQuoteButton = document.getElementById("new-quote-btn");
+const weatherLoading = document.getElementById("weather-loading");
+const weatherContent = document.getElementById("weather-content");
+const refreshWeatherButton = document.getElementById("refresh-weather-btn");
 
 const typingPhrases = [
   "Développement Web",
-  "Programmation",
-  "Leadership Associatif",
-  "Organisation d'événements"
+  "Programmation en C",
+  "Leadership associatif",
+  "Analyse et résolution de problèmes"
+];
+
+const fallbackQuotes = [
+  {
+    content: "La réussite appartient à celles et ceux qui avancent avec rigueur, curiosité et constance.",
+    author: "Portfolio Meryem"
+  },
+  {
+    content: "Chaque projet bien construit commence par une idée claire et une exécution disciplinée.",
+    author: "Inspiration"
+  }
 ];
 
 let phraseIndex = 0;
@@ -26,35 +51,40 @@ function typeLoop() {
 
   if (!isDeleting && charIndex < currentPhrase.length) {
     charIndex += 1;
-    setTimeout(typeLoop, 70);
+    setTimeout(typeLoop, 72);
     return;
   }
 
   if (!isDeleting) {
     isDeleting = true;
-    setTimeout(typeLoop, 1350);
+    setTimeout(typeLoop, 1200);
     return;
   }
 
   if (charIndex > 0) {
     charIndex -= 1;
-    setTimeout(typeLoop, 38);
+    setTimeout(typeLoop, 36);
     return;
   }
 
   isDeleting = false;
   phraseIndex = (phraseIndex + 1) % typingPhrases.length;
-  setTimeout(typeLoop, 240);
+  setTimeout(typeLoop, 260);
 }
 
 function animateCounter(counter) {
+  if (counter.dataset.done === "true") {
+    return;
+  }
+
+  counter.dataset.done = "true";
   const target = Number(counter.dataset.target);
   const duration = 900;
   const startTime = performance.now();
 
   function tick(now) {
     const progress = Math.min((now - startTime) / duration, 1);
-    counter.textContent = Math.round(progress * target);
+    counter.textContent = String(Math.round(progress * target));
 
     if (progress < 1) {
       requestAnimationFrame(tick);
@@ -64,9 +94,286 @@ function animateCounter(counter) {
   requestAnimationFrame(tick);
 }
 
-window.addEventListener("scroll", updateScrollState, { passive: true });
-updateScrollState();
-typeLoop();
+function formatDate(dateString) {
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  }).format(new Date(dateString));
+}
+
+function setGithubLoading(isLoading) {
+  githubLoading.classList.toggle("active", isLoading);
+  fetchGithubButton.disabled = isLoading;
+}
+
+function showGithubError(message) {
+  githubError.textContent = `⚠️ ${message}`;
+  githubError.classList.add("active");
+}
+
+function clearGithub() {
+  githubError.textContent = "";
+  githubError.classList.remove("active");
+  githubProfile.classList.remove("active");
+  githubProfile.innerHTML = "";
+  githubRepos.innerHTML = "";
+}
+
+async function fetchGithubData() {
+  const username = githubUsername.value.trim();
+
+  if (!username) {
+    showGithubError("Veuillez saisir un nom d'utilisateur GitHub.");
+    return;
+  }
+
+  clearGithub();
+  setGithubLoading(true);
+
+  try {
+    const [profileResponse, reposResponse] = await Promise.all([
+      fetch(`https://api.github.com/users/${encodeURIComponent(username)}`),
+      fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=6`)
+    ]);
+
+    if (!profileResponse.ok) {
+      throw new Error("Profil GitHub introuvable.");
+    }
+
+    if (!reposResponse.ok) {
+      throw new Error("Impossible de récupérer les dépôts GitHub.");
+    }
+
+    const profile = await profileResponse.json();
+    const repos = await reposResponse.json();
+    renderGithubProfile(profile);
+    renderRepos(repos);
+  } catch (error) {
+    showGithubError(error.message || "Une erreur est survenue pendant le chargement.");
+  } finally {
+    setGithubLoading(false);
+  }
+}
+
+function renderGithubProfile(profile) {
+  githubProfile.innerHTML = `
+    <img src="${profile.avatar_url}" alt="${profile.login}">
+    <div class="profile-meta">
+      <h3>${profile.name || profile.login}</h3>
+      <p>${profile.bio || "Profil GitHub public"}</p>
+      <div class="profile-stats">
+        <span>Repos: ${profile.public_repos}</span>
+        <span>Followers: ${profile.followers}</span>
+        <span>Following: ${profile.following}</span>
+      </div>
+    </div>
+  `;
+  githubProfile.classList.add("active");
+}
+
+function renderRepos(repos) {
+  if (!repos.length) {
+    githubRepos.innerHTML = '<article class="repo-card"><p>Aucun dépôt public trouvé.</p></article>';
+    return;
+  }
+
+  githubRepos.innerHTML = repos.map((repo) => `
+    <article class="repo-card">
+      <div class="repo-top">
+        <a class="repo-name" href="${repo.html_url}" target="_blank" rel="noreferrer">${repo.name}</a>
+        <span class="language-badge">${repo.language || "Code"}</span>
+      </div>
+      <p>${repo.description || "Dépôt public GitHub sans description."}</p>
+      <div class="repo-bottom">
+        <span>⭐ ${repo.stargazers_count}</span>
+        <span>🍴 ${repo.forks_count}</span>
+        <span>Mis à jour: ${formatDate(repo.updated_at)}</span>
+      </div>
+    </article>
+  `).join("");
+}
+
+async function fetchQuote() {
+  quoteLoading.classList.add("active");
+  quoteText.classList.add("fade");
+  quoteAuthor.textContent = "";
+
+  try {
+    const response = await fetch("https://api.quotable.io/random?maxLength=130");
+
+    if (!response.ok) {
+      throw new Error("Quote API unavailable");
+    }
+
+    const quote = await response.json();
+    updateQuote(quote.content, quote.author);
+  } catch {
+    const quote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+    updateQuote(quote.content, quote.author);
+  } finally {
+    quoteLoading.classList.remove("active");
+  }
+}
+
+function updateQuote(content, author) {
+  setTimeout(() => {
+    quoteText.textContent = content;
+    quoteAuthor.textContent = `— ${author}`;
+    quoteText.classList.remove("fade");
+  }, 240);
+}
+
+function weatherIcon(code) {
+  if (code === 0) {
+    return "☀️";
+  }
+
+  if ([1, 2, 3].includes(code)) {
+    return "⛅";
+  }
+
+  if ([45, 48].includes(code)) {
+    return "🌫️";
+  }
+
+  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+    return "🌧️";
+  }
+
+  if ([95, 96, 99].includes(code)) {
+    return "⛈️";
+  }
+
+  return "🌤️";
+}
+
+function weatherDescription(code) {
+  const descriptions = {
+    0: "Ciel dégagé",
+    1: "Principalement clair",
+    2: "Partiellement nuageux",
+    3: "Couvert",
+    45: "Brouillard",
+    48: "Brouillard givrant",
+    51: "Bruine légère",
+    53: "Bruine modérée",
+    55: "Bruine dense",
+    61: "Pluie faible",
+    63: "Pluie modérée",
+    65: "Pluie forte",
+    80: "Averses faibles",
+    81: "Averses modérées",
+    82: "Averses fortes",
+    95: "Orage",
+    96: "Orage avec grêle",
+    99: "Orage fort avec grêle"
+  };
+
+  return descriptions[code] || "Conditions variables";
+}
+
+async function fetchWeather() {
+  weatherLoading.classList.add("active");
+  weatherContent.innerHTML = "";
+
+  try {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=28.987&longitude=-10.057&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Africa%2FCasablanca";
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Weather API unavailable");
+    }
+
+    const data = await response.json();
+    const current = data.current;
+
+    weatherContent.innerHTML = `
+      <span class="weather-icon">${weatherIcon(current.weather_code)}</span>
+      <div class="temperature">${Math.round(current.temperature_2m)}°C</div>
+      <p class="weather-city">Guelmim, Maroc</p>
+      <div class="weather-details">
+        <span>💧 ${current.relative_humidity_2m}%</span>
+        <span>💨 ${Math.round(current.wind_speed_10m)} km/h</span>
+        <span>${weatherDescription(current.weather_code)}</span>
+      </div>
+    `;
+  } catch {
+    weatherContent.innerHTML = `
+      <span class="weather-icon">🌤️</span>
+      <div class="temperature">--°C</div>
+      <p class="weather-city">Météo indisponible pour le moment.</p>
+    `;
+  } finally {
+    weatherLoading.classList.remove("active");
+  }
+}
+
+function animateSkillBars(card) {
+  card.querySelectorAll(".skill-fill").forEach((fill) => {
+    fill.style.width = fill.dataset.width;
+  });
+}
+
+function animateRing(card) {
+  const ring = card.querySelector(".ring-fill");
+  const percent = Number(ring.dataset.percent);
+  const circumference = 314.16;
+  ring.style.strokeDashoffset = String(circumference - (circumference * percent) / 100);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) {
+      return;
+    }
+
+    entry.target.classList.add("visible");
+
+    if (entry.target.classList.contains("skill-card")) {
+      animateSkillBars(entry.target);
+    }
+
+    if (entry.target.classList.contains("about-card")) {
+      entry.target.querySelectorAll(".stat-number").forEach(animateCounter);
+    }
+
+    if (entry.target.classList.contains("language-card")) {
+      animateRing(entry.target);
+    }
+
+    observer.unobserve(entry.target);
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".fade-in, .fade-in-left, .fade-in-right").forEach((element) => {
+  observer.observe(element);
+});
+
+document.querySelectorAll(".project-card").forEach((card) => {
+  card.addEventListener("mousemove", (event) => {
+    const rect = card.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const rotateY = ((x / rect.width) - 0.5) * 10;
+    const rotateX = ((y / rect.height) - 0.5) * -10;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateX(0deg) rotateY(0deg)";
+  });
+});
+
+document.querySelectorAll("a, button, input, textarea").forEach((element) => {
+  element.addEventListener("mouseenter", () => customCursor.classList.add("hovering"));
+  element.addEventListener("mouseleave", () => customCursor.classList.remove("hovering"));
+});
+
+document.addEventListener("mousemove", (event) => {
+  customCursor.style.left = `${event.clientX}px`;
+  customCursor.style.top = `${event.clientY}px`;
+});
 
 hamburger.addEventListener("click", () => {
   const isOpen = navLinks.classList.toggle("open");
@@ -82,58 +389,49 @@ navLinks.querySelectorAll("a").forEach((link) => {
   });
 });
 
+window.addEventListener("scroll", updateScrollState, { passive: true });
+
 scrollTopButton.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+fetchGithubButton.addEventListener("click", fetchGithubData);
+githubUsername.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    fetchGithubData();
+  }
+});
+
+newQuoteButton.addEventListener("click", fetchQuote);
+refreshWeatherButton.addEventListener("click", fetchWeather);
+
 document.querySelector(".contact-form").addEventListener("submit", (event) => {
   event.preventDefault();
   event.currentTarget.reset();
+  event.currentTarget.querySelector("#contact-submit").textContent = "Message prêt à envoyer ✓";
+  setTimeout(() => {
+    document.getElementById("contact-submit").textContent = "Envoyer le message ✉️";
+  }, 1800);
 });
 
-const observer = new IntersectionObserver((entries) => {
+const navObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (!entry.isIntersecting) {
       return;
     }
 
-    entry.target.classList.add("visible");
-
-    if (entry.target.classList.contains("skill-card")) {
-      entry.target.querySelectorAll(".skill-item").forEach((skill) => {
-        const fill = skill.querySelector(".skill-bar span");
-        fill.style.width = `${skill.dataset.percent}%`;
-      });
-    }
-
-    if (entry.target.classList.contains("about-card")) {
-      entry.target.querySelectorAll(".stat-number").forEach(animateCounter);
-    }
-
-    if (entry.target.classList.contains("timeline")) {
-      entry.target.classList.add("active");
-    }
-
-    observer.unobserve(entry.target);
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+    });
   });
-}, { threshold: 0.2 });
+}, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
 
-document.querySelectorAll(".reveal").forEach((element) => {
-  observer.observe(element);
+document.querySelectorAll("main section").forEach((section) => {
+  navObserver.observe(section);
 });
 
-document.querySelectorAll(".project-card").forEach((card) => {
-  card.addEventListener("mousemove", (event) => {
-    const rect = card.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const rotateY = ((x / rect.width) - 0.5) * 10;
-    const rotateX = ((y / rect.height) - 0.5) * -10;
-
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  });
-
-  card.addEventListener("mouseleave", () => {
-    card.style.transform = "rotateX(0deg) rotateY(0deg)";
-  });
-});
+updateScrollState();
+typeLoop();
+fetchGithubData();
+fetchQuote();
+fetchWeather();
