@@ -16,10 +16,9 @@ It presents my profile, skills, and projects using a modern and interactive desi
 - JavaScript
 
 ## 📸 Screenshot
-![Screenshot](./image.png)
-
+![Screenshot](./imagee.png)
 ## 🎨 Figma Design
-(Add your Figma link here)
+https://www.figma.com/proto/68yP4hoU6cB1b6D5tbHWxh/Sans-titre?node-id=0-1&t=MWV04oFt0QupfGTd-1
 
 ## 🌍 Live Demo
 https://meryamelkhouchali-spec.github.io/portfolio-meryem-elkhouchali/
