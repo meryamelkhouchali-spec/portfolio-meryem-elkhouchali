@@ -14,9 +14,7 @@ const quoteLoading = document.getElementById("quote-loading");
 const quoteText = document.getElementById("quote-text");
 const quoteAuthor = document.getElementById("quote-author");
 const newQuoteButton = document.getElementById("new-quote-btn");
-const weatherLoading = document.getElementById("weather-loading");
-const weatherContent = document.getElementById("weather-content");
-const refreshWeatherButton = document.getElementById("refresh-weather-btn");
+
 
 const typingPhrases = [
   "Développement Web",
@@ -224,90 +222,7 @@ function updateQuote(content, author) {
   }, 240);
 }
 
-function weatherIcon(code) {
-  if (code === 0) {
-    return "☀️";
-  }
 
-  if ([1, 2, 3].includes(code)) {
-    return "⛅";
-  }
-
-  if ([45, 48].includes(code)) {
-    return "🌫️";
-  }
-
-  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
-    return "🌧️";
-  }
-
-  if ([95, 96, 99].includes(code)) {
-    return "⛈️";
-  }
-
-  return "🌤️";
-}
-
-function weatherDescription(code) {
-  const descriptions = {
-    0: "Ciel dégagé",
-    1: "Principalement clair",
-    2: "Partiellement nuageux",
-    3: "Couvert",
-    45: "Brouillard",
-    48: "Brouillard givrant",
-    51: "Bruine légère",
-    53: "Bruine modérée",
-    55: "Bruine dense",
-    61: "Pluie faible",
-    63: "Pluie modérée",
-    65: "Pluie forte",
-    80: "Averses faibles",
-    81: "Averses modérées",
-    82: "Averses fortes",
-    95: "Orage",
-    96: "Orage avec grêle",
-    99: "Orage fort avec grêle"
-  };
-
-  return descriptions[code] || "Conditions variables";
-}
-
-async function fetchWeather() {
-  weatherLoading.classList.add("active");
-  weatherContent.innerHTML = "";
-
-  try {
-    const url = "https://api.open-meteo.com/v1/forecast?latitude=28.987&longitude=-10.057&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Africa%2FCasablanca";
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error("Weather API unavailable");
-    }
-
-    const data = await response.json();
-    const current = data.current;
-
-    weatherContent.innerHTML = `
-      <span class="weather-icon">${weatherIcon(current.weather_code)}</span>
-      <div class="temperature">${Math.round(current.temperature_2m)}°C</div>
-      <p class="weather-city">Guelmim, Maroc</p>
-      <div class="weather-details">
-        <span>💧 ${current.relative_humidity_2m}%</span>
-        <span>💨 ${Math.round(current.wind_speed_10m)} km/h</span>
-        <span>${weatherDescription(current.weather_code)}</span>
-      </div>
-    `;
-  } catch {
-    weatherContent.innerHTML = `
-      <span class="weather-icon">🌤️</span>
-      <div class="temperature">--°C</div>
-      <p class="weather-city">Météo indisponible pour le moment.</p>
-    `;
-  } finally {
-    weatherLoading.classList.remove("active");
-  }
-}
 
 function animateSkillBars(card) {
   card.querySelectorAll(".skill-fill").forEach((fill) => {
