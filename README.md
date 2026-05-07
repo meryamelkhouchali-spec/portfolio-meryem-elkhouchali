@@ -1,24 +1,69 @@
-# 🌐 Portfolio - Meryem Elkhouchali
+# 🌐 Portfolio – Meryem Elkhouchali
 
-## 📌 Description
-This is my personal portfolio website created as part of my academic project.
-It presents my profile, skills, and projects using a modern and interactive design.
+<p align="center">
+  <img src="./screenshot.png" width="900">
+</p>
 
-## 🚀 Features
-- Responsive design (mobile & desktop)
-- Modern UI with animations and gradient effects
-- Sections: Home, About, Skills, Projects, Contact
-- Interactive elements using JavaScript
+---
 
-## 🛠️ Technologies Used
+## 🚀 Description du projet
+
+Ce projet consiste en la création d’un portfolio personnel moderne et responsive développé dans le cadre académique.
+
+L’objectif principal est de présenter :
+
+- Mon profil académique
+- Mes compétences techniques
+- Mes projets réalisés
+- Mon expérience et leadership
+- Ma formation
+- Mes informations de contact
+
+Le site propose une interface moderne avec animations, navigation fluide et responsive design adapté aux ordinateurs et aux mobiles.
+
+---
+
+## ✨ Fonctionnalités principales
+
+- Interface moderne et interactive
+- Responsive Design (Desktop & Mobile)
+- Navigation fluide entre les sections
+- Animations avec JavaScript
+- Présentation des projets
+- Formulaire de contact
+- Prototype interactif réalisé sur Figma
+
+---
+
+## 🛠️ Technologies utilisées
+
 - HTML5
 - CSS3
 - JavaScript
+- Figma
+- Git & GitHub
 
-## 📸 Screenshot
-![Screenshot](./imagee.png)
-## 🎨 Figma Design
-https://www.figma.com/proto/68yP4hoU6cB1b6D5tbHWxh/Sans-titre?node-id=0-1&t=MWV04oFt0QupfGTd-1
+---
 
-## 🌍 Live Demo
+## 📸 Capture d’écran du site
+
+![Screenshot](./screenshot.png)
+
+---
+
+## 🎨 Lien vers la maquette Figma
+
+https://www.figma.com/proto/68yP4hoU6cB1b6D5tbHWxh/Sans-titre
+
+---
+
+## 🌍 Version en ligne
+
 https://meryamelkhouchali-spec.github.io/portfolio-meryem-elkhouchali/
+
+---
+
+## 👩‍💻 Réalisé par
+
+**Meryem Elkhouchali**  
+Étudiante en Génie Informatique – EST Guelmim
